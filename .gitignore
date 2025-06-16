@@ -1,0 +1,5 @@
+tests/node_modules
+tests/playwright-report
+tests/screenshots
+tests/test-results
+tests/package-lock.json
