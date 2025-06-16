@@ -1,0 +1,21 @@
+{
+  "name": "qa",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "cli": "uvx nrp-cmd"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.48.1",
+    "@types/node": "^22.7.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.3"
+  }
+}
