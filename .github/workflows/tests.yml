@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2025 Graz University of Technology.
+#
+# repository-tugraz is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+
+name: E2E Tests
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+  # Run weekly on Sundays at 2 AM UTC
+  schedule:
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason"
+        required: false
+        default: "Manual trigger"
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    # Add more resources for running multiple containers
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
