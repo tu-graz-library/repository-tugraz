@@ -52,6 +52,3 @@ exclude = [
   "run-tests.sh",
   "tests/**",
 ]
-
-[tool.hatch.version]
-path = "repository_tugraz/__init__.py"
