@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-dynamic = ["version"]
+version = "0.0.1"
 description = "Base package for tugraz repository"
 name = "repository-tugraz"
 authors = [
