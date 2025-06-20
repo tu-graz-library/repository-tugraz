@@ -1,7 +1,7 @@
 # STAGE 1
 FROM ghcr.io/tu-graz-library/docker-invenio-base:main-builder AS builder
 
-COPY pyproject.toml ./
+COPY pyproject.toml LICENSE README.md ./
 
 RUN uv sync
 
