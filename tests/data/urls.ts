@@ -7,7 +7,7 @@
 
 
 // Direct URLS for a quick navigation
-const baseURL = "http://127.0.0.1:5000/"
+const baseURL = process.env.CI ? "http://127.0.0.1:5000/" : "https://127.0.0.1:5000/";
 
 export const urls = {
   baseURL,
