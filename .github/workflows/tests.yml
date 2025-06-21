@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         working-directory: tests
         run: |
-          npm clean-install
+          npm install
 
       - name: Install playwright browsers
         working-directory: tests
