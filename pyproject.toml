@@ -1,0 +1,50 @@
+[project]
+dynamic = ["version"]
+description = "Base package for tugraz repository"
+name = "repository-tugraz"
+authors = [
+  {name = "Graz University of Technology", email = "info@tugraz.at"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["invenio", "edugain"]
+license = {file = "LICENSE"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "uwsgi>=2.0",
+  "uwsgitop>=0.11",
+  "uwsgi-tools>=1.1.1",
+
+  "invenio-app-rdm[opensearch2]~=13.0.0rc1",
+  "invenio-saml>=1.0.0",
+  "invenio-config-tugraz>=0.12.0",
+  "invenio-theme-tugraz>=4.13.0",
+  "invenio-records-lom>=0.12.0",
+  "invenio-records-marc21>=0.17.0",
+  "invenio-records-global-search>=0.2.0",
+  "invenio-global-search>=0.2.0",
+  "invenio-imoox>=0.2.0",
+  "invenio-alma>=0.12.0",
+  "invenio-pure>=0.1.0",
+  "invenio-moodle>=0.2.0",
+  "invenio-campusonline>=0.3.0",
+  "invenio-workflows-tugraz>=0.3.0",
+#  "invenio-curations",
+  "repository-cli>=0.11.0",
+]
+
+[project.urls]
+Repository = "https://github.com/tu-graz-library/repository-tugraz"
+
+
+[tool.hatch.build]
+exclude = [
+  "run-tests.sh",
+  "tests/**",
+]
