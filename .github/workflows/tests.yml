@@ -24,9 +24,9 @@ on:
         default: "Manual trigger"
 
 env:
-  # Default environment variables
   DOCKER_IMAGE_NAME: qa
   APPLICATION_URL: https://127.0.0.1:5000
+  HEADLESS: true
 
 jobs:
   e2e-tests:
@@ -61,107 +61,43 @@ jobs:
           # Start all services
           docker compose -f docker-compose.full.yml up -d
 
-          echo "Services started, waiting for health checks..."
-
-      # - name: Wait for PostgreSQL to be ready
-      #   run: |
-      #     echo "Waiting for PostgreSQL..."
-      #     timeout 120 bash -c '
-      #       until docker compose -f docker-compose.full.yml exec -T postgres pg_isready -h localhost -p 5432; do
-      #         echo "PostgreSQL is unavailable - sleeping"
-      #         sleep 2
-      #       done
-      #     '
-      #     echo "PostgreSQL is ready!"
-
-      # - name: Wait for Redis to be ready
-      #   run: |
-      #     echo "Waiting for Redis..."
-      #     timeout 60 bash -c '
-      #       until docker compose -f docker-compose.full.yml exec -T redis redis-cli ping | grep -q PONG; do
-      #         echo "Redis is unavailable - sleeping"
-      #         sleep 2
-      #       done
-      #     '
-      #     echo "Redis is ready!"
-
-      # - name: Wait for RabbitMQ to be ready
-      #   run: |
-      #     echo "Waiting for RabbitMQ..."
-      #     timeout 120 bash -c '
-      #       until docker compose -f docker-compose.full.yml exec -T rabbitmq rabbitmq-diagnostics -q ping; do
-      #         echo "RabbitMQ is unavailable - sleeping"
-      #         sleep 2
-      #       done
-      #     '
-      #     echo "RabbitMQ is ready!"
-
-      # - name: Wait for OpenSearch to be ready
-      #   run: |
-      #     echo "Waiting for OpenSearch..."
-      #     timeout 120 bash -c '
-      #       until curl -s http://localhost:9200/_cluster/health | grep -q "yellow\|green"; do
-      #         echo "OpenSearch is unavailable - sleeping"
-      #         sleep 5
-      #       done
-      #     '
-      #     echo "OpenSearch is ready!"
-
-      # - name: Wait for application to be ready
-      #   run: |
-      #     echo "Waiting for application..."
-      #     timeout 120 bash -c '
-      #       until curl -s ${{ env.APPLICATION_URL }}/health || curl -s ${{ env.APPLICATION_URL }} > /dev/null 2>&1; do
-      #         echo "Application is unavailable - sleeping"
-      #         sleep 5
-      #       done
-      #     '
-      #     echo "Application is ready!"
+          echo "Services started..."
 
       - name: Show running containers
         run: |
           echo "Currently running containers:"
           docker compose -f docker-compose.full.yml ps
 
-      # - name: Set up Node.js for Playwright
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: "22"
-      #     # cache: "npm"
-      #     # cache-dependency-path: tests/package-lock.json
+      - name: Setup playwright
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
-      # - name: Install Playwright dependencies
-      #   working-directory: tests
-      #   run: |
-      #     npm clean-install
-      #     npx playwright install --with-deps
+      - name: Install dependencies
+        working-directory: tests
+        run: |
+          npm clean-install
 
-      # - name: Run Playwright tests
-      #   working-directory: tests
-      #   env:
-      #     # Add any environment variables your tests might need
-      #     BASE_URL: ${{ env.APPLICATION_URL }}
-      #     # Add secrets here if needed
-      #     # API_KEY: ${{ secrets.API_KEY }}
-      #     # DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #   run: |
-      #     npx playwright test --reporter=html
+      - name: Install playwright browsers
+        working-directory: tests
+        run: |
+          npx playwright install --with-deps
 
-      # - name: Upload Playwright HTML Report
-      #   uses: actions/upload-artifact@v4
-      #   if: always()
-      #   with:
-      #     name: playwright-report-${{ github.run_id }}
-      #     path: tests/playwright-report/
-      #     retention-days: 30
+      - name: Run tests and always pass the step
+        working-directory: tests
+        env:
+          # Add any environment variables your tests might need
+          BASE_URL: ${{ env.APPLICATION_URL }}
+        run: |
+          npx playwright test
 
-      # - name: Upload test results
-      #   uses: actions/upload-artifact@v4
-      #   if: always()
-      #   with:
-      #     name: test-results-${{ github.run_id }}
-      #     path: tests/test-results/
-      #     retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
 
       # - name: Show container logs on failure
       #   if: failure()

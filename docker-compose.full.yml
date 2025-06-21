@@ -1,24 +1,12 @@
-# Example of a full infrastructure stack
+# -*- coding: utf-8 -*-
 #
-# Note, this file is not suitable for a production deployment. It is only an
-# example of all the infrastructure components needed in a real production
-# deployment.
+# Copyright (C) 2025 Graz University of Technology.
 #
-# Usage::
-#
-#   $ docker compose up -f docker-compose.full.yml -d
-#
-# Following services are included:
-# - Frontend: Nginx (exposed ports: 40 and 443)
-# - UI application: UWSGI (not exposed)
-# - API application: UWSGI (not exposed)
-# - Cache: Redis (exposed port: 6379)
-# - DB: (PostgresSQL/MySQL) (exposed port: 5432 or 3306)
-# - Message queue: RabbitMQ (exposed ports: 5672, 15672)
-# - Search platform: (OpenSearch) (exposed ports: 9200, 9600)
-# - OpenSearch Dashboard/Kibana (view OS/ES indexes) (exposed ports: 5601)
-#
+# repository-tugraz is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
 name: qa
+
 services:
   cache:
     extends:
