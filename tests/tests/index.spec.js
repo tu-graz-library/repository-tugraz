@@ -22,6 +22,6 @@ test.describe("application", () => {
     // You can add more specific checks here based on your application
     // For example:
     // await expect(page.locator("h1")).toBeVisible();
-    await expect(page.locator(".random-records-frontpage h2")).toHaveText("Recent uploads");
+    await expect(page.locator(".random-records-frontpage h2").first()).toHaveText("Research Results");
   });
 });

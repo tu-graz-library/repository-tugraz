@@ -6,8 +6,9 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 
-import { test as base, expect, Pagease, expect, Page } from "@playwright/test";
+import { test as base, expect, Page, BrowserContext } from "@playwright/test";
 import { mkdirSync } from "fs";
+import { join } from "path";
 
 const screenshotDir = "./screenshots";
 mkdirSync(screenshotDir, { recursive: true }); // Ensure the directory exists

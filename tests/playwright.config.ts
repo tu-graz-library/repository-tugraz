@@ -4,13 +4,13 @@ export default defineConfig({
   testDir: "./tests",  // Directory where tests are located
   fullyParallel: true,  // Run tests in parallel
   forbidOnly: !!process.env.CI,  // Disallow ".only" on tests in CI to prevent accidental skipping
-  retries: process.env.CI ? 2 : 0,  // Retry failed tests only in CI (2 retries), none locally
+  retries: process.env.CI ? 1 : 0,  // Retry failed tests only in CI (2 retries), none locally
   workers: process.env.CI ? 1 : undefined,  // Limit to 1 worker in CI (to avoid overloading the system), undefined for local
 
   timeout: process.env.TEST_TIMEOUT ? Number(process.env.TEST_TIMEOUT) : 120000, // Global test timeout (default: 120 seconds)
 
   reporter: [
-    ["html", { outputFolder: 'playwright-report' }],  // Generate an HTML report for test results
+    ["html", { outputFolder: "playwright-report", open: "never"  }],  // Generate an HTML report for test results
   ],
 
   use: {
