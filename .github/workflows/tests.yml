@@ -26,7 +26,6 @@ on:
 env:
   # Default environment variables
   DOCKER_IMAGE_NAME: qa
-  COMPOSE_PROJECT_NAME: e2e-test-${{ github.run_id }}
   APPLICATION_URL: https://127.0.0.1:5000
 
 jobs:
@@ -47,6 +46,12 @@ jobs:
         run: |
           docker build -t ${{ env.DOCKER_IMAGE_NAME }} .
           echo "Docker image built successfully: ${{ env.DOCKER_IMAGE_NAME }}"
+
+      - name: Build qa-frontend
+        working-directory: docker/nginx
+        run: |
+          docker build -t qa-frontend .
+          echo "Docker image built successfully: qa-frontend"
 
       - name: Start services with Docker Compose
         run: |

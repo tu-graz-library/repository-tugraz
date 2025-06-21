@@ -18,6 +18,7 @@
 # - Search platform: (OpenSearch) (exposed ports: 9200, 9600)
 # - OpenSearch Dashboard/Kibana (view OS/ES indexes) (exposed ports: 5601)
 #
+name: qa
 services:
   cache:
     extends:

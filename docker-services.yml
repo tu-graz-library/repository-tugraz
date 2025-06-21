@@ -1,10 +1,6 @@
 name: qa
 services:
   app:
-    build:
-      context: ./
-      args:
-        - ENVIRONMENT=DEV
     image: qa
     restart: "unless-stopped"
     environment:
@@ -21,7 +17,6 @@ services:
       - "INVENIO_WSGI_PROXIES=2"
       - "INVENIO_RATELIMIT_STORAGE_URL=redis://cache:6379/3"
   frontend:
-    build: ./docker/nginx/
     image: qa-frontend
     restart: "unless-stopped"
     ports:
