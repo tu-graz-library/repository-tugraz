@@ -10,8 +10,7 @@ export default defineConfig({
   timeout: process.env.TEST_TIMEOUT ? Number(process.env.TEST_TIMEOUT) : 120000, // Global test timeout (default: 120 seconds)
 
   reporter: [
-    ["list"],  // Use the list reporter for test results in the terminal (you can use: json, html, allure format etc)
-    ["html"],  // Generate an HTML report for test results
+    ["html", { outputFolder: 'playwright-report' }],  // Generate an HTML report for test results
   ],
 
   use: {

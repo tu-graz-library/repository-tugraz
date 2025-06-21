@@ -5,12 +5,13 @@
 // repository-tugraz is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../utils/fixtures";
+import { urls } from "../data/urls";
 
-test.describe("Application Health Check", () => {
+test.describe("application", () => {
   test("should load the homepage", async ({ page }) => {
     // Navigate to the homepage
-    await page.goto("/");
+    await page.goto(urls.baseURL);
 
     // Wait for the page to load
     await page.waitForLoadState("networkidle");
@@ -21,6 +22,6 @@ test.describe("Application Health Check", () => {
     // You can add more specific checks here based on your application
     // For example:
     // await expect(page.locator("h1")).toBeVisible();
-    // await expect(page.locator("title")).toHaveText("Your App Title");
+    await expect(page.locator(".random-records-frontpage h2")).toHaveText("Recent uploads");
   });
 });
