@@ -42,6 +42,11 @@ dependencies = [
 [project.urls]
 Repository = "https://github.com/tu-graz-library/repository-tugraz"
 
+[tool.uv]
+package = false
+
+[tool.setuptools]
+packages = []
 
 [tool.hatch.build]
 exclude = [
