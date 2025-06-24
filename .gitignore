@@ -25,3 +25,5 @@ env/
 .coverage
 .coverage.*
 instance/
+
+*.egg-info
