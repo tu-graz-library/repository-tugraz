@@ -1,5 +1,38 @@
-tests/node_modules
-tests/playwright-report
-tests/screenshots
-tests/test-results
-tests/package-lock.json
+node_modules/
+package-lock.json
+
+test-results/
+playwright-report/
+screenshots/
+tests/screenshots/
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python and invenio specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.log
+.coverage
+.coverage.*
+instance/
