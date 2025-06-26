@@ -1,22 +1,11 @@
-node_modules/
-package-lock.json
+e2e/node_modules/
+e2e/package-lock.json
+e2e/test-results/
+e2e/playwright-report/
+e2e/screenshots/
 
-test-results/
-playwright-report/
-screenshots/
-tests/screenshots/
-
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.pdf
-
-# OS files
 .DS_Store
 Thumbs.db
-
-# IDE files
 .vscode/
 .idea/
 *.swp
