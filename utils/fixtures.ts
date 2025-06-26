@@ -5,46 +5,43 @@
 // repository-tugraz is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
+import { BrowserContext, Page, test as base, expect } from "@playwright/test";
 
-import { test as base, expect, Page, BrowserContext } from "@playwright/test";
-import { mkdirSync } from "fs";
 import { join } from "path";
+import { mkdirSync } from "fs";
 
 const screenshotDir = "./screenshots";
-mkdirSync(screenshotDir, { recursive: true }); // Ensure the directory exists
+mkdirSync(screenshotDir, { recursive: true });
 
+/* Custom test fixtures with browser context and page setup */
 export const test = base.extend<{
-  context: BrowserContext; // Fixture for browser context
-  page: Page; // Fixture for the page object
+  context: BrowserContext;
+  page: Page;
 }>({
-  // Browser context fixture with viewport size set to 1920x1080
+  /* Browser context with custom viewport size */
   context: async ({ browser }, use) => {
     const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
     await use(context);
-    // Let Playwright handle closing the context after all tests
   },
 
-  // Page fixture tied to the above context
+  /* Page instance within the browser context */
   page: async ({ context }, use) => {
-    const page = await context.newPage(); // Create a new page within the context
-    await use(page); // Pass the page to tests
-    // No need to manually close the page, Playwright handles this
+    const page = await context.newPage();
+    await use(page);
   },
 });
 
-
-// Capture screenshot on test failure (as a fixture)
+/* Capture screenshot on test failure and add retry delay */
 test.afterEach(async ({ page }, testInfo) => {
-  if (testInfo.status === "failed") { // Check if the test failed
-    const screenshotPath = join(screenshotDir, `${testInfo.title.replace(/[^a-zA-Z0-9]/g, "_")}.png`); // Define screenshot path
-    await page.screenshot({ path: screenshotPath, fullPage: true }); // Capture a full-page screenshot
-    console.log(`Screenshot captured at: ${screenshotPath}`); // Log screenshot path for debugging
+  if (testInfo.status === "failed") {
+    const screenshotPath = join(screenshotDir, `${testInfo.title.replace(/[^a-zA-Z0-9]/g, "_")}.png`);
+    await page.screenshot({ path: screenshotPath, fullPage: true });
+    console.log(`Screenshot captured at: ${screenshotPath}`);
 
-    // Add a delay before the test is retried
+    /* Add delay before retry to avoid rapid test execution */
     console.log("Test failed, waiting 61 seconds before retrying...");
     await new Promise(resolve => setTimeout(resolve, 61000));
   }
 });
 
-// Re-export Playwright"s expect for use in tests
 export { expect };
