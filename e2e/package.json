@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "cli": "uvx nrp-cmd"
+    "cli": "uvx nrp-cmd",
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "type-check": "tsc --noEmit",
+    "pre-commit": "npm run type-check && npm test"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": "",
+  "description": "QA testing suite for TU Graz repository",
   "devDependencies": {
     "@playwright/test": "^1.48.1",
     "@types/node": "^22.7.4",
