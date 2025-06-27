@@ -11,16 +11,16 @@ import { urls } from "../data/urls";
 
 test.describe("application", () => {
   test("should load the homepage", async ({ page }) => {
-    /** Navigate to the homepage */
+    /* Navigate to the homepage */
     await page.goto(urls.baseURL);
 
-    /** Wait for the page to load */
+    /* Wait for the page to load */
     await page.waitForLoadState("networkidle");
 
-    /** Check that the page has loaded successfully */
+    /* Check that the page has loaded successfully */
     expect(page.url()).toMatch(/https:\/\/127.0.0.1/);
 
-    /** Verify the first section heading is "Research Results" */
+    /* Verify the first section heading is "Research Results" */
     await expect(page.locator(".random-records-frontpage h2").first()).toHaveText("Research Results");
   });
 });
