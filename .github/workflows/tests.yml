@@ -25,7 +25,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: qa
-  APPLICATION_URL: https://127.0.0.1:5000
+  BASE_URL: https://127.0.0.1:443
   HEADLESS: true
 
 jobs:
@@ -81,20 +81,20 @@ jobs:
           node-version: "22"
 
       - name: Install dependencies
-        working-directory: tests
+        working-directory: e2e
         run: |
           npm install
 
       - name: Install playwright browsers
-        working-directory: tests
+        working-directory: e2e
         run: |
           npx playwright install --with-deps
 
       - name: Run tests and always pass the step
-        working-directory: tests
+        working-directory: e2e
         env:
           # Add any environment variables your tests might need
-          BASE_URL: ${{ env.APPLICATION_URL }}
+          BASE_URL: ${{ env.BASE_URL }}
         run: |
           npx playwright test
 
@@ -102,7 +102,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: playwright-report/
+          path: e2e/playwright-report/
           retention-days: 14
 
 
@@ -127,4 +127,3 @@ jobs:
       #     docker-compose -f docker-compose.full.yml -p ${{ env.COMPOSE_PROJECT_NAME }} down -v --remove-orphans
       #     docker rmi ${{ env.DOCKER_IMAGE_NAME }} || true
       #     docker system prune -f
-
