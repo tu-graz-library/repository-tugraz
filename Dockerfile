@@ -16,6 +16,13 @@ COPY ./static/ ${INVENIO_INSTANCE_PATH}/static/
 COPY ./translations ${INVENIO_INSTANCE_PATH}/translations/
 COPY ./templates ${INVENIO_INSTANCE_PATH}/templates/
 
+# Note: This compilation step happens automatically in production builds.
+# In test environments (qa image), this step is missing and needs to be run manually
+# via 'pybabel compile -d translations' because the test setup uses a minimal image.
+WORKDIR ${INVENIO_INSTANCE_PATH}
+RUN mkdir -p translations/de/LC_MESSAGES
+COPY translations/de/LC_MESSAGES/messages.po translations/de/LC_MESSAGES/
+RUN pybabel compile -d translations
 
 WORKDIR ${INVENIO_INSTANCE_PATH}/assets
 RUN pnpm install
